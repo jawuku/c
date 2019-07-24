@@ -1,6 +1,8 @@
 /* realpi = 4/sqrt((1+sqrt(5))/2)
 
-C Program by Jason Awuku 2018 <j.awuku@gmail.com>
+C Program by Jason Awuku
+
+Copyright (c) Jason Awuku 2019
 
 To calculate Pi using Arbitrary Precision Mathematics (16384 bits - can be altered to even higher amounts)
 
@@ -14,11 +16,11 @@ sudo apt install build-essential libmpfr-dev libgmp-dev
 
 Compile with:
 
-gcc -Wall -O3 -o realpi realpi.c -lmpfr -lgmp
+gcc -Wall -O3 -o realpi_decplaces_cmd realpi_decplaces_cmd.c -lmpfr -lgmp
 
 This version takes command line input
-Usage: ./realpi_cmd <bits of precision>
-If no argument supplied, defaults to 256 bit precision */
+Usage: ./realpi_decplaces_cmd <decimal places>
+If no argument supplied, defaults to 50 decimal places */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -51,9 +53,9 @@ int main (int argc, char *argv[])
     }
 
 //if puts in a negative number or fraction
-    if (dec_places <= 0)
+    if (dec_places < 1)
     {
-        puts ("Enter value greater than 0. Usage: realpi_cmd <decimal places>");
+        puts ("Enter value 1 or higher. Usage: realpi_cmd <decimal places>");
         puts ("Setting to 50 decimal places.");
         dec_places = 50;
     }
@@ -86,7 +88,6 @@ int main (int argc, char *argv[])
 
 
 //calculate realpi = 4/sqrt((1+sqrt(5))/2) step by step
-// almost like a pseudo-assembly type language
 
 //rt = sqrt(rt) to make sqrt(5)
     mpfr_sqrt (rt, rt, MPFR_RNDN);
