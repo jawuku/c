@@ -28,19 +28,40 @@ int main (void)
 // declare variable types for use with mpfr
 mpfr_t realpi, phi, rt, c1, c2, c4;
 
+//input bits (user interaction) - with error catching
+long prec;
+int input;
+printf ("Enter bits of precision ");
+input = scanf ("%ld", &prec);
+putchar('\n');
 
-//declare precision of these floating point variables (16384 bits)
-mpfr_init2 (realpi, 16384);
+//if user just presses non-numerical values -  avoids lock up
+//scanf() is buggy
+if (!input)
+{
+printf ("No value entered. Setting precision to 256 bits.\n");
+prec = 256;
+}
 
-mpfr_init2 (phi, 16384);
+//if puts in a negative number or fraction
+if (prec <= 0)
+{
+prec = 256;
+printf ("Enter value greater than 0. Precision set to 256 bits instead.\n");
+}
 
-mpfr_init2 (rt, 16384);
+//declare precision of these floating point variables
+mpfr_init2 (realpi, prec);
 
-mpfr_init2 (c1, 16384);
+mpfr_init2 (phi, prec);
 
-mpfr_init2 (c2, 16384);
+mpfr_init2 (rt, prec);
 
-mpfr_init2 (c4, 16384);
+mpfr_init2 (c1, prec);
+
+mpfr_init2 (c2, prec);
+
+mpfr_init2 (c4, prec);
 
 //assign constants c1=1, c2=2, c4=4, rt=5 to be inserted into calculations
 
@@ -57,16 +78,16 @@ mpfr_set_d (c4, 4.0, MPFR_RNDD);
 // almost like a pseudo-assembly type language
 
 //rt = sqrt(rt) to make sqrt(5)
-mpfr_sqrt (rt, rt, MPFR_RNDD);
+mpfr_sqrt (rt, rt, MPFR_RNDN);
 
 //rt = rt + 1 i.r 1+sqrt(5)
-mpfr_add (rt, rt, c1, MPFR_RNDU);
+mpfr_add (rt, rt, c1, MPFR_RNDN);
 
 //phi = rt / 2 ; i.e phi = (1+sqrt(5))/2
-mpfr_div (phi, rt, c2, MPFR_RNDD);
+mpfr_div (phi, rt, c2, MPFR_RNDN);
 
 //square root of phi
-mpfr_sqrt (rt, phi, MPFR_RNDD);
+mpfr_sqrt (rt, phi, MPFR_RNDN);
 
 //final pi calculation: realpi = 4 / sqare root of phi
 mpfr_div (realpi, c4, rt, MPFR_RNDD);
@@ -76,7 +97,7 @@ mpfr_div (realpi, c4, rt, MPFR_RNDD);
 printf ("Real value of Pi = ");
 
 //format (output stream (screen in this case), base 10, default decimal places, realpi result, round down last digit)
-mpfr_out_str (stdout, 10, 0, realpi, MPFR_RNDD);
+mpfr_out_str (stdout, 10, 0, realpi, MPFR_RNDN);
 
 putchar ('\n');
 
