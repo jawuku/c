@@ -4,7 +4,7 @@ C Program by Jason Awuku
 
 Copyright (c) Jason Awuku 2019, 2021
 
-To calculate Pi using Arbitrary Precision Mathematics (16384 bits - can be altered to even higher amounts)
+To calculate Pi using Arbitrary Precision Mathematics (1024 bits - can be altered to even higher amounts)
 
 Needs GMP and MPFR libraries respectively
 
@@ -29,7 +29,7 @@ If no argument supplied, defaults to 50 decimal places */
 
 int main(int argc, char *argv[])
 {
-    long prec = 512; //bits of precision
+    long prec = 1024; // bits of precision
     int dec_places;
 // checks 1st command line argument - converts string to integer
     if (argc > 1)
@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
 
     putchar('\n');
 
-//clear all variables for a clean exit
+// clear all variables for a clean exit
 
     mpfr_clears(realpi, phi, rt, c1, c2, c4, (mpfr_ptr) 0);
 
