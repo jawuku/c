@@ -2,7 +2,7 @@
 
 C Program by Jason Awuku
 
-Copyright (c) Jason Awuku 2019
+Copyright (c) Jason Awuku 2019, 2021
 
 To calculate Pi using Arbitrary Precision Mathematics (16384 bits - can be altered to even higher amounts)
 
